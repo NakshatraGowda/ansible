@@ -1,71 +1,124 @@
-This project demonstrates infrastructure automation using ansible by provisioning and configuring nginx on AWS EC2 instances.
+# 🔧 Hello-World Ansible Nginx Deployment
 
-The setup ncludes:
-- An ansible controller node(ubuntu EC2)
-- Multiple Target nodes(ubuntu EC2)
-- Automated installation and configuration of Nginx
-- Cloning a repository and deploying a static web page
+> This repository demonstrates **infrastructure automation** with Ansible by provisioning and configuring Nginx on AWS EC2 instances.
 
-This project was built to practice:
-- Configuration management
-- Infrastructure as Code (IaC)
-- SSH-based automation
-- AWS EC2 provisioning concepts
+<br/>
 
+## 🚀 Overview
 
-Architecture is very simple :
-Controller Node -> SSH -> Target servers
-Ansible Playbook -> Install nginx -> Clone Repo -> Restart service
+A simple architecture:
 
-Prerequisites:
+```
+Controller Node ↔ SSH ↔ Target Servers
+       │
+Ansible Playbook: install nginx → clone repo → restart service
+```
+
+**Key components:**
+
+- Ansible controller (Ubuntu EC2)
+- One or more target Ubuntu EC2 servers
+- Automated Nginx installation and configuration
+- Static web site deployment from a Git repository
+
+<br/>
+
+## 📦 Features
+
+- Configuration management with Ansible
+- Infrastructure as Code (IaC) workflow
+- SSH‑based automation across EC2 instances
+- Hands‑on AWS EC2 provisioning concepts
+
+<br/>
+
+## ✅ Prerequisites
+
 - AWS account
-- 1 EC2 instance (Controller) - Ubuntu
-- 1 or more EC2 instances (target servers) - ubuntu
-- Same key pair used for all instances
-- Ansible installed on controller
+- Ansible installed on the controller node
+- EC2 instances:
+  - 1 controller (Ubuntu)
+  - ≥1 target servers (Ubuntu)
+- Same SSH key pair for all instances
+- Security group allowing:
+  - Port **22** (SSH)
+  - Port **80** (HTTP)
 
-Setup and execution steps
-1. Launch EC2 instances
-    - Create one ubuntu EC2 instance (controller)
-    - Create one or more ubuntu EC2 instances (Target servers).
-    - Ensure:
-        - Same key pair is used
-        - security group allows:
-            a. Port 22 (SSH)
-            b. Port 80 (HTTP)
+<br/>
 
-2. Install ansible on controller 
-    sudo apt update
-    sudo apt install ansible -y
+## 🛠️ Setup & Execution
 
-    Verify installation:
-    ansible --version
+1. **Launch EC2 instances**
+   - Create Ubuntu instances for controller and targets.
+   - Verify the shared key pair and security group ports.
 
-3. Configuration inventory file
-    Add target server IP addresses in the inventory file:
-    [web]
-<target-server-public-ip> ansible_user=ubuntu ansible_ssh_private_key_file=/path/to/key.pem
+2. **Install Ansible on controller**
+   ```bash
+   sudo apt update
+   sudo apt install ansible -y
+   ansible --version        # verify installation
+   ```
 
-4. Test connectivity
-    Verify SSH connection between controller and target:
-    ansible web -i inventory -m ping
-    Expected Output:
-    "ping": "pong"
+3. **Edit inventory file** (`ansible/inventory`):
+   ```ini
+   [web]
+   <target-server-public-ip> ansible_user=ubuntu ansible_ssh_private_key_file=/path/to/key.pem
+   ```
 
-5. Run ansible playbook
-    execute the deployment playbook:
-    ansible-playbook -i inventory nginx-deployment.yml
+4. **Test connectivity**
+   ```bash
+   ansible web -i ansible/inventory -m ping
+   # expected output: "pong"
+   ```
 
-    This playbook will:
-    - Install nginx
-    - Enable and start nginx service
-    - install git
-    - clone the project repository
-    - restart nginx
+5. **Run deployment playbook**
+   ```bash
+   ansible-playbook -i ansible/inventory ansible/nginx-deployment.yml
+   ```
+   The playbook will:
+   - install and start Nginx
+   - install Git
+   - clone this project's repo
+   - restart the Nginx service
 
-Expected outcome:
-    After successfull execution:
-    - Nginx will be installed and running
-    - The static website will be deployed on each target server
-    - Access the application via:
-        http://<target-server-public-ip>
+<br/>
+
+## 🎯 Expected Outcome
+
+After successful execution:
+
+- **Nginx** is running on each target server
+- The **static website** from this repo is deployed
+- Access via: `http://<target-server-public-ip>`
+
+<br/>
+
+## 📁 Repository Structure
+
+```
+├── ansible/
+│   ├── inventory
+│   ├── nginx-deployment.yml
+│   └── templates/
+│       └── nginx.conf.j2
+├── index.html
+└── README.md
+```
+
+<br/>
+
+## 🤝 Contributing
+
+Feel free to submit issues or pull requests. Add roles, extend playbooks, or improve docs!
+
+<br/>
+
+## 📝 License
+
+Include your preferred license here (e.g., MIT, Apache 2.0).
+
+<br/>
+
+## 📬 Contact
+
+For questions or support, reach out at `you@example.com` (replace with your email).
