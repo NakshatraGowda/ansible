@@ -110,15 +110,8 @@ After successful execution:
 ## 🤝 Contributing
 
 Feel free to submit issues or pull requests. Add roles, extend playbooks, or improve docs!
-
-<br/>
-
-## 📝 License
-
-Include your preferred license here (e.g., MIT, Apache 2.0).
-
 <br/>
 
 ## 📬 Contact
 
-For questions or support, reach out at `you@example.com` (replace with your email).
+For questions or support, reach out at `nakshatra.gowda.2000@gmail.com`.
