@@ -114,4 +114,4 @@ Feel free to submit issues or pull requests. Add roles, extend playbooks, or imp
 
 ## 📬 Contact
 
-For questions or support, reach out at `nakshatra.gowda.2000@gmail.com`.
+For questions or support, reach out at `nakshatra.gowda.2000@gmail.com` or `https://www.linkedin.com/in/nakshatra-gowda/`.
