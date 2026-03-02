@@ -1,0 +1,47 @@
+---
+
+#This Ansible playbook automates the setup and deployment of a web application on all servers defined in the inventory file.
+#It installs Nginx and Git, ensures the Nginx service is started and enabled at boot, then clones the application repository from GitHub into /var/www/myapp. 
+#Finally, it deploys a custom Nginx configuration using a template file and restarts Nginx automatically if any configuration changes are made.
+
+- name: this is to install and enable nginx service and install git, clone repository and restart the service
+  hosts: all
+  become: true
+
+  tasks:
+    - name: install nginx
+      apt:
+        name: nginx
+        state: present
+        update_cache: yes
+        cache_valid_time: 3600
+
+    - name: start nginx
+      service:
+        name: nginx
+        state: started
+        enabled: yes
+
+    - name: Install git
+      apt:
+        name: git
+        state: present
+
+    - name: Clone website repo
+      git:
+        repo: "https://github.com/NakshatraGowda/ansible.git"
+        dest: /var/www/myapp
+        force: yes
+
+    - name: Deploy nginx config
+      template:
+        src: templates/nginx.conf.j2
+        dest: /etc/nginx/sites-available/default
+      notify: Restart nginx
+
+  #restarts nginx whenever any change is made
+  handlers:
+    - name: Restart nginx
+      service:
+        name: nginx
+        state: restarted
